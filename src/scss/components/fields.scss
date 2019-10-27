@@ -71,6 +71,11 @@
 	&:focus ~ .lock-icon {
 		color: $main-blue;
 	}
+	&:focus {
+		& ~ .field__border {
+			background-color: $main-blue;
+		}
+	}
 
 	&__label {
 		position: absolute;
@@ -93,11 +98,6 @@
 	}
 }
 .basic-field {
-	&:focus {
-		& ~ .field__border {
-			background-color: $main-blue;
-		}
-	}
 	&:not(:placeholder-shown) + .field__label {
 		color: $gray-for-label;
 		transform: translateY(-26px) scale(0.68);

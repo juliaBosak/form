@@ -1,27 +1,25 @@
-<!--suppress ES6ShorthandObjectProperty -->
 <template>
 	<section class="form-popup">
 		<div class="main-nav">
 			<div class="main-nav__content">
-				<button class="circle-button up-button"  @click="change(1)"></button>
+				<button class="circle-button up-button"></button>
 				<ul class="dots">
 					<li class="dot"></li>
 					<li class="dot active"></li>
 					<li class="dot"></li>
 					<li class="dot"></li>
 				</ul>
-				<button class="circle-button down-button" @click="change(2)"></button>
+				<button class="circle-button down-button" @click="change(0)"></button>
 				<div class="rounded-rectangle-1 blue-rounded-rectangle"></div>
 				<div class="rounded-rectangle-2 gray-rounded-rectangle"></div>
 				<div class="rounded-rectangle-3 blue-rounded-rectangle"></div>
 				<div class="rounded-rectangle-4 gray-rounded-rectangle"></div>
-				
+
 			</div>
 		</div>
 		<div class="form-popup__content">
-			<h3 class="form-popup__title title-h3">Basic Details</h3>
-			<form action="" class="main-form" id="basic-delails-form"
-			@submit.prevent="">
+			<h3 class="form-popup__title title-h3">Previous Details</h3>
+			<form action="" class="main-form" id="basic-delails-form" @submit.prevent="">
 				<div class="main-form__fields">
 					<div class="main-form__column">
 						<label class="main-form__input-wrap field__wrap">
@@ -106,7 +104,7 @@
 									:class="{ error: isUserIDError, success: isUserIDValid }"
 									@blur="isUserIDTouched = true"
 									@focus="isUserIDTouched = false"
-								>
+							>
 							<span class="field__label">Your User ID</span>
 							<span class="field__border"></span>
 							<i class="zmdi zmdi-lock-outline lock-icon"></i>
@@ -130,23 +128,23 @@
 								<i class="zmdi zmdi-chevron-down chevron-down-icon"></i>
 							</label>
 							<label class="field__wrap small-field__wrap">
-							<select
-									id="countrySelect"
-									v-model="citySelected"
-									class="field select-filed"
-									:class="{selected: citySelected, active: openCitySelect,
+								<select
+										id="countrySelect"
+										v-model="citySelected"
+										class="field select-filed"
+										:class="{selected: citySelected, active: openCitySelect,
 									error: isCityError}"
-									@click="openCitySelect = true"
-									@blur="openCitySelect = false, isCityTouched = true"
-									@focus="isCityTouched = false, reset = false">
-								<option v-for="city in purposeCities" v-bind:key="city.id" v-bind:value="city.name">
-									{{city.name}}
-								</option>
-							</select>
+										@click="openCitySelect = true"
+										@blur="openCitySelect = false, isCityTouched = true"
+										@focus="isCityTouched = false, reset = false">
+									<option v-for="city in purposeCities" v-bind:key="city.id" v-bind:value="city.name">
+										{{city.name}}
+									</option>
+								</select>
 								<span class="field__label">City</span>
 								<span class="field__border"></span>
 								<i class="zmdi zmdi-chevron-down chevron-down-icon"></i>
-						</label>
+							</label>
 						</label>
 						<label class="main-form__input-wrap field__wrap">
 							<input
@@ -173,8 +171,6 @@
 </template>
 
 <script>
-	/* eslint-disable no-console */
-
 	const emailCheckRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	const nameCheckRegex =/^[а-яёіїє]{2,50}$/iu;
 	const phoneCheckRegex =/^\+380\d{9}$/;
@@ -182,7 +178,7 @@
 	const referenceCodeCheckRegex =/^[a-z0-9]{10}$/iu;
 
 	export default {
-		name: 'formBasicDetails',
+		name: 'prevForm',
 		props: {
 			currentCountries: Array,
 			currentStates: Array,
@@ -282,7 +278,7 @@
 				if (!this.citySelected) { this.isCityTouched = true; valid = false; }
 				return valid;
 			},
-			resetForm() {
+			resetForm: function () {
 				const sureAnswear = confirm('Are you sure? The data you enter will not be saved');
 				if (sureAnswear) {
 					this.reset = true;
@@ -309,6 +305,7 @@
 			change(number) {
 				if (this.checkForm()) {
 					this.$emit('changePage', number);
+
 				}
 			},
 		},

@@ -1,0 +1,150 @@
+.field__wrap {
+	position: relative;
+	margin: auto;
+	max-width: 360px;
+	font-family: "Proxima Nova", sans-serif;
+	font-size: 14px;
+
+	.success-icon {
+		color: #56b650;
+		position: absolute;
+		font-size: 20px;
+		bottom: 14px;
+		right: 0;
+		opacity: 0;
+		display: none;
+		transition: all .3s;
+		&.right20 {
+			right: 20px;
+		}
+	}
+
+	.lock-icon {
+		position: absolute;
+		color: $gray;
+		font-size: 20px;
+		bottom: 12px;
+		right: 0;
+		transition: all .3s;
+	}
+	&.small-field__wrap {
+		width: 44.4%;
+	}
+
+	.chevron-down-icon {
+		color: #000000;
+		font-size: 20px;
+		position: absolute;
+		right: 0;
+		bottom: 12px;
+		transition: all .3s;
+	}
+}
+.field {
+	-webkit-appearance: none;
+	width: calc(100% - 35px);
+	font-family: inherit;
+	padding-bottom: 12px;
+	padding-top: 22px;
+	font-size: 20px;
+	line-height: 15px;
+	color: #333;
+	transition: all 0.15s ease;
+	&:-webkit-autofill {
+		-webkit-text-fill-color: #333; /* цвет текста */
+	}
+	&:-webkit-autofill:focus {
+		-webkit-text-fill-color: #333; /* цвет текста */
+	}
+	&.success ~ .success-icon {
+		display: inline-block;
+		opacity: 1;
+	}
+	&.uppercase {
+		text-transform: uppercase;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&:focus ~ .lock-icon {
+		color: $main-blue;
+	}
+
+	&__label {
+		position: absolute;
+		bottom: 14px;
+		left: 0;
+		color: #000;
+		font-size: 20px;
+		line-height: 15px;
+		transform-origin: 0 0;
+		transition: all 0.2s ease;
+		pointer-events: none;
+	}
+	&__border {
+		position: absolute;
+		width: 100%;
+		height: 1px;
+		background-color: $gray-for-border;
+		bottom: 0;
+		left: 0;
+	}
+}
+.basic-field {
+	&:focus {
+		& ~ .field__border {
+			background-color: $main-blue;
+		}
+	}
+	&:not(:placeholder-shown) + .field__label {
+		color: $gray-for-label;
+		transform: translateY(-26px) scale(0.68);
+	}
+
+	&:focus + .field__label {
+		font-family: 'Proxima Nova SemiBold', sans-serif;
+		color: $main-blue;
+		transform: translateY(-26px) scale(0.68);
+	}
+	&.error {
+		& ~ .field__border {
+			background-color: red;
+		}
+		& + .field__label {
+			font-family: 'Proxima Nova SemiBold', sans-serif;
+			color: red;
+		}
+	}
+
+}
+.select-filed {
+	height: 59px;
+	&.field:focus + .field__label {
+		font-family: 'Proxima Nova SemiBold', sans-serif;
+		color: $main-blue;
+		transform: translateY(-26px) scale(0.68);
+	}
+
+	&.selected + .field__label {
+		color: $gray-for-label;
+		transform: translateY(-26px) scale(0.68);
+	}
+
+	&.active ~ .chevron-down-icon {
+		transform: rotate(180deg);
+	}
+	&.error {
+		& ~ .field__border {
+			background-color: red;
+		}
+		border-bottom: 1px solid red;
+		& + .field__label {
+			font-family: 'Proxima Nova SemiBold', sans-serif;
+			color: red;
+		}
+	}
+}
+
+

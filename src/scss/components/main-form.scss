@@ -1,0 +1,26 @@
+.main-form {
+	&__fields {
+		border-bottom: 1px solid rgba(216, 216, 216, .3);
+		border-top: 1px solid rgba(216, 216, 216, .3);
+		padding-top: 40px;
+		display: flex;
+		justify-content: space-between;
+	}
+	&__column {
+		max-width: 360px;
+		flex-basis: 47.37%;
+	}
+	&__input-wrap {
+		margin-bottom: 30px;
+		width: 100%;
+	}
+	&__input-group {
+		display: flex;
+		justify-content: space-between;
+	}
+	&__buttons {
+		margin-top: 30px;
+		display: flex;
+		justify-content: space-between;
+	}
+}

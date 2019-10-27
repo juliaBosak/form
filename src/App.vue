@@ -1,29 +1,29 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <main class="main-content">
+    <div id="app">
+      <formBasicDetails :current-countries="currentCountries" :current-states="currentStates" :current-cities="currentCities"/>
+    </div>
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import formBasicDetails from './components/formBasicDetails.vue';
+import countries from './assets/countries.json';
+import states from './assets/states.json';
+import cities from './assets/cities.json';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    formBasicDetails
+  },
+  data() {
+    return {
+      currentCountries: countries,
+      currentStates: states,
+      currentCities: cities,
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
 <style lang="scss" src="./scss/style.scss"></style>

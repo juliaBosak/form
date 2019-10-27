@@ -1,2 +1,26 @@
-@import "./services/normalize";
-@import "./services/media";
+@import "services/normalize";
+@import "services/media";
+@import "services/variables";
+@import "services/fonts";
+@import "~vue-select/src/scss/vue-select.scss";
+html, body, main {
+	width: 100%;
+	height: 100%;
+}
+* {
+	box-sizing: border-box;
+}
+.main-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f0f0f0;
+	font-family: "Proxima Nova", "Proxima Nova Lt", Arial, sans-serif;
+}
+@import "components/buttons";
+@import "components/dots";
+@import "components/main-nav";
+@import "components/title";
+@import "components/fields";
+@import "components/main-form";
+@import "components/main-popup";

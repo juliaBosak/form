@@ -1,0 +1,16 @@
+.form-popup {
+	width: 1000px;
+	height: 600px;
+	box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	background-color: #ffffff;
+	display: flex;
+	&__content {
+		margin: 0 auto;
+		width: 76%;
+		padding-top: 40px;
+	}
+	&__title {
+		margin-bottom: 39px;
+	}
+}

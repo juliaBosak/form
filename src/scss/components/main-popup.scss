@@ -14,3 +14,36 @@
 		margin-bottom: 39px;
 	}
 }
+@include for-medium {
+	.form-popup {
+		width: 920px;
+	}
+}
+@include for-small {
+	.form-popup {
+		width: 100%;
+		height: auto;
+		&__content {
+			padding-top: 20px;
+		}
+		&__title {
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+	}
+}@include for-extra-small {
+	 .form-popup {
+		 width: 100%;
+		 height: auto;
+		 &__content {
+			 padding-top: 20px;
+			 width: auto;
+			 padding-right: 7%;
+			 padding-left: 7%;
+		 }
+		 &__title {
+			 margin-top: 20px;
+			 margin-bottom: 20px;
+		 }
+	 }
+ }

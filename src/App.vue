@@ -16,10 +16,15 @@
   import formBasicDetails from './components/formBasicDetails.vue';
   import prevForm from './components/prevForm.vue';
   import nextForm from './components/nextForm.vue';
-  import countries from './assets/countries.json';
-import states from './assets/states.json';
-import cities from './assets/cities.json';
+  import countries from './assets/countries1.json';
+import states from './assets/states1.json';
+import cities from './assets/cities1.json';
   let forms = [formBasicDetails, prevForm, nextForm];
+  window.onbeforeunload = function() {
+    localStorage.clear();
+    return '';
+  };
+
 export default {
   name: 'app',
   components: {

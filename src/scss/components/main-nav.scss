@@ -46,3 +46,36 @@
 		left: 0;
 	}
 }
+@include for-small {
+	.main-nav {
+		padding-top: 20px;
+		width: 130px;
+		height: auto;
+		&__content {
+			height: 500px;
+		}
+	}
+	.blue-rounded-rectangle {
+		display: none;
+	}
+	.gray-rounded-rectangle {
+		display: none;
+	}
+	}
+
+@include for-extra-small {
+	.main-nav {
+		width: 70px;
+		height: auto;
+		&__content {
+			height: 80vh;
+			position: fixed;
+		}
+	}
+	.blue-rounded-rectangle {
+		display: none;
+	}
+	.gray-rounded-rectangle {
+		display: none;
+	}
+}

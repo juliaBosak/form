@@ -6,8 +6,8 @@
 				<button class="circle-button up-button"  @click="change(1)"></button>
 				<ul class="dots">
 					<li class="dot"></li>
+					<li class="dot "></li>
 					<li class="dot active"></li>
-					<li class="dot"></li>
 					<li class="dot"></li>
 				</ul>
 				<button class="circle-button down-button" @click="change(2)"></button>
@@ -217,7 +217,9 @@
 				states: this.currentStates,
 				cities: this.currentCities,
 				purposeStates: null,
-				purposeCities: null
+				purposeCities: null,
+				gridData: null,
+				nameForm: 'BasicDetails',
 			}
 		},
 		computed: {
@@ -270,16 +272,59 @@
 		methods: {
 			checkForm() {
 				let valid = true;
+				if (!this.reset) {
+					if (!this.isFirstNameValid) {
+						this.isFirstNameTouched = true;
+						valid = false;
+					}
+					if (!this.isEmailValid) {
+						this.isEmailTouched = true;
+						valid = false;
+					}
+					if (!this.countrySelected) {
+						this.isCountryTouched = true;
+						valid = false;
+					}
+					if (!this.isPhoneNumberValid) {
+						this.isPhoneNumberTouched = true;
+						valid = false;
+					}
+					if (!this.isLastNameValid) {
+						this.isLastNameTouched = true;
+						valid = false;
+					}
+					if (!this.isUserIDValid) {
+						this.isUserIDTouched = true;
+						valid = false;
+					}
+					if (!this.isReferenceCodeValid) {
+						this.isReferenceCodeTouched = true;
+						valid = false;
+					}
+					if (!this.stateSelected) {
+						this.isStateTouched = true;
+						valid = false;
+					}
+					if (!this.citySelected) {
+						this.isCityTouched = true;
+						valid = false;
+					}
+				}
+				if (valid) {
+					this.gridData = {
+						FirstName: this.firstName,
+						Email: this.email,
+						CountryId: this.countrySelected,
+						PhoneNumber: this.phoneNumber,
+						LastName: this.lastName,
+						UserID: this.userID,
+						ReferenceCode: this.referenceCode,
+						StateID: this.stateSelected,
+						City: this.citySelected
+					};
+					localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+				}
 				this.reset = false;
-				if (!this.isFirstNameValid) { this.isFirstNameTouched = true; valid = false; }
-				if (!this.isEmailValid){ this.isEmailTouched = true; valid = false; }
-				if (!this.countrySelected) { this.isCountryTouched = true; valid = false; }
-				if (!this.isPhoneNumberValid) { this.isPhoneNumberTouched = true; valid = false; }
-				if (!this.isLastNameValid) { this.isLastNameTouched = true; valid = false; }
-				if (!this.isUserIDValid) { this.isUserIDTouched = true; valid = false; }
-				if (!this.isReferenceCodeValid)  { this.isReferenceCodeTouched = true; valid = false; }
-				if (!this.stateSelected) { this.isStateTouched = true; valid = false; }
-				if (!this.citySelected) { this.isCityTouched = true; valid = false; }
 				return valid;
 			},
 			resetForm() {
@@ -311,17 +356,46 @@
 					this.$emit('changePage', number);
 				}
 			},
+			updateValue() {
+				this.firstName = this.gridData.FirstName;
+				this.email = this.gridData.Email;
+				this.countrySelected = this.gridData.CountryId;
+				this.phoneNumber = this.gridData.PhoneNumber;
+				this.lastName = this.gridData.LastName;
+				this.userID = this.gridData.UserID;
+				this.referenceCode = this.gridData.ReferenceCode;
+				this.stateSelected = this.gridData.StateID;
+				this.citySelected = this.gridData.City;
+			}
 		},
 		watch: {
 			countrySelected: {
 				handler(value) {
 					this.purposeStates = this.states.filter((state) => state.country_id === value);
+					if(value)  {
+						this.stateSelected = null;
+						this.citySelected = null;
+					}
 				}
 			},
 			stateSelected: {
 				handler(value) {
 					this.purposeCities = this.cities.filter((city) => city.state_id === value);
+					if(value)  {
+						this.citySelected = null;
+					}
 				}
+			},
+			gridData: {
+				handler() {
+					this.updateValue();
+				}
+			}
+		},
+		mounted() {
+			if (localStorage.getItem(this.nameForm)) {
+				this.gridData = JSON.parse(localStorage.getItem(this.nameForm));
+				this.updateValue();
 			}
 		}
 	}

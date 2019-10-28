@@ -10,10 +10,18 @@ html, body, main {
 * {
 	box-sizing: border-box;
 }
-.main-content {
+#app {
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+@include for-extra-small {
+	#app {
+		height: auto;
+	}
+}
+.main-content {
 	background-color: #f0f0f0;
 	font-family: "Proxima Nova", "Proxima Nova Lt", Arial, sans-serif;
 }

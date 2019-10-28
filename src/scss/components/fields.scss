@@ -121,6 +121,7 @@
 }
 .select-filed {
 	height: 59px;
+	line-height: 1;
 	&.field:focus + .field__label {
 		font-family: 'Proxima Nova SemiBold', sans-serif;
 		color: $main-blue;

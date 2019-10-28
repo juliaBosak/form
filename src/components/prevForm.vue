@@ -1,15 +1,16 @@
+<!--suppress ES6ShorthandObjectProperty -->
 <template>
 	<section class="form-popup">
 		<div class="main-nav">
 			<div class="main-nav__content">
-				<button class="circle-button up-button"></button>
+				<button class="circle-button up-button" ></button>
 				<ul class="dots">
 					<li class="dot"></li>
 					<li class="dot active"></li>
-					<li class="dot"></li>
-					<li class="dot"></li>
+					<li class="dot "></li>
+					<li class="dot "></li>
 				</ul>
-				<button class="circle-button down-button" @click="change(0)"></button>
+				<button class="circle-button down-button"  @click="change(0)"></button>
 				<div class="rounded-rectangle-1 blue-rounded-rectangle"></div>
 				<div class="rounded-rectangle-2 gray-rounded-rectangle"></div>
 				<div class="rounded-rectangle-3 blue-rounded-rectangle"></div>
@@ -19,7 +20,7 @@
 		</div>
 		<div class="form-popup__content">
 			<h3 class="form-popup__title title-h3">Previous Details</h3>
-			<form action="" class="main-form" id="basic-delails-form" @submit.prevent="">
+			<form action="" class="main-form"  @submit.prevent="">
 				<div class="main-form__fields">
 					<div class="main-form__column">
 						<label class="main-form__input-wrap field__wrap">
@@ -171,6 +172,8 @@
 </template>
 
 <script>
+	/* eslint-disable no-console */
+
 	const emailCheckRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	const nameCheckRegex =/^[а-яёіїє]{2,50}$/iu;
 	const phoneCheckRegex =/^\+380\d{9}$/;
@@ -178,7 +181,7 @@
 	const referenceCodeCheckRegex =/^[a-z0-9]{10}$/iu;
 
 	export default {
-		name: 'prevForm',
+		name: 'formPrevDetails',
 		props: {
 			currentCountries: Array,
 			currentStates: Array,
@@ -213,7 +216,9 @@
 				states: this.currentStates,
 				cities: this.currentCities,
 				purposeStates: null,
-				purposeCities: null
+				purposeCities: null,
+				gridData: null,
+				nameForm: 'PrevDetails',
 			}
 		},
 		computed: {
@@ -266,19 +271,62 @@
 		methods: {
 			checkForm() {
 				let valid = true;
+				if (!this.reset) {
+					if (!this.isFirstNameValid) {
+						this.isFirstNameTouched = true;
+						valid = false;
+					}
+					if (!this.isEmailValid) {
+						this.isEmailTouched = true;
+						valid = false;
+					}
+					if (!this.countrySelected) {
+						this.isCountryTouched = true;
+						valid = false;
+					}
+					if (!this.isPhoneNumberValid) {
+						this.isPhoneNumberTouched = true;
+						valid = false;
+					}
+					if (!this.isLastNameValid) {
+						this.isLastNameTouched = true;
+						valid = false;
+					}
+					if (!this.isUserIDValid) {
+						this.isUserIDTouched = true;
+						valid = false;
+					}
+					if (!this.isReferenceCodeValid) {
+						this.isReferenceCodeTouched = true;
+						valid = false;
+					}
+					if (!this.stateSelected) {
+						this.isStateTouched = true;
+						valid = false;
+					}
+					if (!this.citySelected) {
+						this.isCityTouched = true;
+						valid = false;
+					}
+				}
+				if (valid) {
+					this.gridData = {
+						FirstName: this.firstName,
+						Email: this.email,
+						CountryId: this.countrySelected,
+						PhoneNumber: this.phoneNumber,
+						LastName: this.lastName,
+						UserID: this.userID,
+						ReferenceCode: this.referenceCode,
+						StateID: this.stateSelected,
+						City: this.citySelected
+					};
+					localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+				}
 				this.reset = false;
-				if (!this.isFirstNameValid) { this.isFirstNameTouched = true; valid = false; }
-				if (!this.isEmailValid){ this.isEmailTouched = true; valid = false; }
-				if (!this.countrySelected) { this.isCountryTouched = true; valid = false; }
-				if (!this.isPhoneNumberValid) { this.isPhoneNumberTouched = true; valid = false; }
-				if (!this.isLastNameValid) { this.isLastNameTouched = true; valid = false; }
-				if (!this.isUserIDValid) { this.isUserIDTouched = true; valid = false; }
-				if (!this.isReferenceCodeValid)  { this.isReferenceCodeTouched = true; valid = false; }
-				if (!this.stateSelected) { this.isStateTouched = true; valid = false; }
-				if (!this.citySelected) { this.isCityTouched = true; valid = false; }
 				return valid;
 			},
-			resetForm: function () {
+			resetForm() {
 				const sureAnswear = confirm('Are you sure? The data you enter will not be saved');
 				if (sureAnswear) {
 					this.reset = true;
@@ -305,20 +353,45 @@
 			change(number) {
 				if (this.checkForm()) {
 					this.$emit('changePage', number);
-
 				}
 			},
+			updateValue() {
+				this.firstName = this.gridData.FirstName;
+				this.email = this.gridData.Email;
+				this.countrySelected = this.gridData.CountryId;
+				this.phoneNumber = this.gridData.PhoneNumber;
+				this.lastName = this.gridData.LastName;
+				this.userID = this.gridData.UserID;
+				this.referenceCode = this.gridData.ReferenceCode;
+				this.stateSelected = this.gridData.StateID;
+				this.citySelected = this.gridData.City;
+			}
 		},
 		watch: {
 			countrySelected: {
 				handler(value) {
 					this.purposeStates = this.states.filter((state) => state.country_id === value);
+					if(value)  {
+						this.stateSelected = null;
+						this.citySelected = null;
+					}
 				}
 			},
 			stateSelected: {
 				handler(value) {
 					this.purposeCities = this.cities.filter((city) => city.state_id === value);
 				}
+			},
+			gridData: {
+				handler() {
+					this.updateValue();
+				}
+			}
+		},
+		mounted() {
+			if (localStorage.getItem(this.nameForm)) {
+				this.gridData = JSON.parse(localStorage.getItem(this.nameForm));
+				this.updateValue();
 			}
 		}
 	}

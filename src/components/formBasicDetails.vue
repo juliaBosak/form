@@ -164,8 +164,8 @@
 					</div>
 				</div>
 				<div class="main-form__buttons">
+					<button class="blue-button"  @click="setContinue(), checkForm()">Continue</button>
 					<button class="reset-button" @click="resetForm()">Reset All</button>
-					<button class="blue-button" @click="checkForm()">Continue</button>
 				</div>
 			</form>
 		</div>
@@ -220,6 +220,7 @@
 				purposeCities: null,
 				gridData: null,
 				nameForm: 'BasicDetails',
+				continue: false,
 			}
 		},
 		computed: {
@@ -272,63 +273,83 @@
 		methods: {
 			checkForm() {
 				let valid = true;
-				if (!this.reset) {
-					if (!this.isFirstNameValid) {
-						this.isFirstNameTouched = true;
-						valid = false;
+					if (!this.reset) {
+						if (!this.isFirstNameValid) {
+							this.isFirstNameTouched = true;
+							valid = false;
+						}
+						if (!this.isEmailValid) {
+							this.isEmailTouched = true;
+							valid = false;
+						}
+						if (!this.countrySelected) {
+							this.isCountryTouched = true;
+							valid = false;
+						}
+						if (!this.isPhoneNumberValid) {
+							this.isPhoneNumberTouched = true;
+							valid = false;
+						}
+						if (!this.isLastNameValid) {
+							this.isLastNameTouched = true;
+							valid = false;
+						}
+						if (!this.isUserIDValid) {
+							this.isUserIDTouched = true;
+							valid = false;
+						}
+						if (!this.isReferenceCodeValid) {
+							this.isReferenceCodeTouched = true;
+							valid = false;
+						}
+						if (!this.stateSelected) {
+							this.isStateTouched = true;
+							valid = false;
+						}
+						if (!this.citySelected) {
+							this.isCityTouched = true;
+							valid = false;
+						}
+						if (valid) {
+							this.gridData = {
+								FirstName: this.firstName,
+								Email: this.email,
+								CountryId: this.countrySelected,
+								PhoneNumber: this.phoneNumber,
+								LastName: this.lastName,
+								UserID: this.userID,
+								ReferenceCode: this.referenceCode,
+								StateID: this.stateSelected,
+								City: this.citySelected
+							};
+							localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+						}
+						else {
+							if (this.continue) {
+									this.gridData = {
+										FirstName: this.firstName,
+										Email: this.email,
+										CountryId: this.countrySelected,
+										PhoneNumber: this.phoneNumber,
+										LastName: this.lastName,
+										UserID: this.userID,
+										ReferenceCode: this.referenceCode,
+										StateID: this.stateSelected,
+										City: this.citySelected
+									};
+									localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+							}
+						}
 					}
-					if (!this.isEmailValid) {
-						this.isEmailTouched = true;
-						valid = false;
-					}
-					if (!this.countrySelected) {
-						this.isCountryTouched = true;
-						valid = false;
-					}
-					if (!this.isPhoneNumberValid) {
-						this.isPhoneNumberTouched = true;
-						valid = false;
-					}
-					if (!this.isLastNameValid) {
-						this.isLastNameTouched = true;
-						valid = false;
-					}
-					if (!this.isUserIDValid) {
-						this.isUserIDTouched = true;
-						valid = false;
-					}
-					if (!this.isReferenceCodeValid) {
-						this.isReferenceCodeTouched = true;
-						valid = false;
-					}
-					if (!this.stateSelected) {
-						this.isStateTouched = true;
-						valid = false;
-					}
-					if (!this.citySelected) {
-						this.isCityTouched = true;
-						valid = false;
-					}
-				}
-				if (valid) {
-					this.gridData = {
-						FirstName: this.firstName,
-						Email: this.email,
-						CountryId: this.countrySelected,
-						PhoneNumber: this.phoneNumber,
-						LastName: this.lastName,
-						UserID: this.userID,
-						ReferenceCode: this.referenceCode,
-						StateID: this.stateSelected,
-						City: this.citySelected
-					};
-					localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
-				}
 				this.reset = false;
 				return valid;
 			},
+			setContinue() {
+				this.continue = true;
+			},
 			resetForm() {
-				const sureAnswear = confirm('Are you sure? The data you enter will not be saved');
+				this.continue = false;
+				const sureAnswear = confirm('Are you sure?');
 				if (sureAnswear) {
 					this.reset = true;
 					this.firstName = null;
@@ -381,9 +402,6 @@
 			stateSelected: {
 				handler(value) {
 					this.purposeCities = this.cities.filter((city) => city.state_id === value);
-					if(value)  {
-						this.citySelected = null;
-					}
 				}
 			},
 			gridData: {

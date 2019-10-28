@@ -7,10 +7,10 @@
 				<ul class="dots">
 					<li class="dot"></li>
 					<li class="dot "></li>
-					<li class="dot "></li>
+					<li class="dot"></li>
 					<li class="dot active"></li>
 				</ul>
-				<button class="circle-button down-button" ></button>
+				<button class="circle-button down-button"></button>
 				<div class="rounded-rectangle-1 blue-rounded-rectangle"></div>
 				<div class="rounded-rectangle-2 gray-rounded-rectangle"></div>
 				<div class="rounded-rectangle-3 blue-rounded-rectangle"></div>
@@ -163,8 +163,8 @@
 					</div>
 				</div>
 				<div class="main-form__buttons">
+					<button class="blue-button" @click="setContinue(), checkForm()">Continue</button>
 					<button class="reset-button" @click="resetForm()">Reset All</button>
-					<button class="blue-button" @click="checkForm()">Continue</button>
 				</div>
 			</form>
 		</div>
@@ -219,6 +219,7 @@
 				purposeCities: null,
 				gridData: null,
 				nameForm: 'NextDetails',
+				continue: false,
 			}
 		},
 		computed: {
@@ -308,26 +309,46 @@
 						this.isCityTouched = true;
 						valid = false;
 					}
-				}
-				if (valid) {
-					this.gridData = {
-						FirstName: this.firstName,
-						Email: this.email,
-						CountryId: this.countrySelected,
-						PhoneNumber: this.phoneNumber,
-						LastName: this.lastName,
-						UserID: this.userID,
-						ReferenceCode: this.referenceCode,
-						StateID: this.stateSelected,
-						City: this.citySelected
-					};
-					localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+					if (valid) {
+						this.gridData = {
+							FirstName: this.firstName,
+							Email: this.email,
+							CountryId: this.countrySelected,
+							PhoneNumber: this.phoneNumber,
+							LastName: this.lastName,
+							UserID: this.userID,
+							ReferenceCode: this.referenceCode,
+							StateID: this.stateSelected,
+							City: this.citySelected
+						};
+						localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+					}
+					else {
+						if (this.continue) {
+							this.gridData = {
+								FirstName: this.firstName,
+								Email: this.email,
+								CountryId: this.countrySelected,
+								PhoneNumber: this.phoneNumber,
+								LastName: this.lastName,
+								UserID: this.userID,
+								ReferenceCode: this.referenceCode,
+								StateID: this.stateSelected,
+								City: this.citySelected
+							};
+							localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+						}
+					}
 				}
 				this.reset = false;
 				return valid;
 			},
+			setContinue() {
+				this.continue = true;
+			},
 			resetForm() {
-				const sureAnswear = confirm('Are you sure? The data you enter will not be saved');
+				this.continue = false;
+				const sureAnswear = confirm('Are you sure?');
 				if (sureAnswear) {
 					this.reset = true;
 					this.firstName = null;
@@ -351,6 +372,7 @@
 				}
 			},
 			change(number) {
+				this.setContinue();
 				if (this.checkForm()) {
 					this.$emit('changePage', number);
 				}

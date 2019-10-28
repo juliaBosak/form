@@ -163,7 +163,7 @@
 					</div>
 				</div>
 				<div class="main-form__buttons">
-					<button class="blue-button" @click="setContinue(), checkForm()">Continue</button>
+					<button class="blue-button" @click="setContinue(), checkForm(), change(0)">Continue</button>
 					<button class="reset-button" @click="resetForm()">Reset All</button>
 				</div>
 			</form>

@@ -1,0 +1,128 @@
+[
+  {
+    "id": 3656,
+    "name": "Buenos Aires",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "C"
+  },
+  {
+    "id": 3647,
+    "name": "Catamarca Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "K"
+  },
+  {
+    "id": 3642,
+    "name": "Córdoba Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "X"
+  },
+  {
+    "id": 3640,
+    "name": "Chaco Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "H"
+  },
+  {
+    "id": 3651,
+    "name": "Chubut Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "U"
+  },
+  {
+    "id": 3638,
+    "name": "Corrientes",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "W"
+  },
+  {
+    "id": 3654,
+    "name": "Entre Ríos Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "E"
+  },
+  {
+    "id": 3652,
+    "name": "Formosa Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "P"
+  },
+  {
+    "id": 3645,
+    "name": "Jujuy Province",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "Y"
+  },
+  {
+    "id": 3655,
+    "name": "La Pampa",
+    "country_id": 11,
+    "country_code": "AR",
+    "state_code": "L"
+  },
+  {
+    "id": 591,
+    "name": "Shabran District",
+    "country_id": 16,
+    "country_code": "AZ",
+    "state_code": "SBN"
+  },
+  {
+    "id": 488,
+    "name": "Andorra la Vella",
+    "country_id": 6,
+    "country_code": "AD",
+    "state_code": "07"
+  },
+  {
+    "id": 489,
+    "name": "Canillo",
+    "country_id": 6,
+    "country_code": "AD",
+    "state_code": "02"
+  },
+  {
+    "id": 487,
+    "name": "Encamp",
+    "country_id": 6,
+    "country_code": "AD",
+    "state_code": "03"
+  },
+  {
+    "id": 221,
+    "name": "Bengo Province",
+    "country_id": 7,
+    "country_code": "AO",
+    "state_code": "BGO"
+  },
+  {
+    "id": 218,
+    "name": "Benguela Province",
+    "country_id": 7,
+    "country_code": "AO",
+    "state_code": "BGU"
+  },
+  {
+    "id": 212,
+    "name": "Bié Province",
+    "country_id": 7,
+    "country_code": "AO",
+    "state_code": "BIE"
+  },
+  {
+    "id": 629,
+    "name": "Berat District",
+    "country_id": 3,
+    "country_code": "AL",
+    "state_code": "BR"
+  }
+]

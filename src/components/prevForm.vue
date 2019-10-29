@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div class="form-popup__content">
-			<h3 class="form-popup__title title-h3">Previos Details</h3>
+			<h3 class="form-popup__title title-h3">Previous Details</h3>
 			<form action="" class="main-form" @submit.prevent="">
 				<div class="main-form__fields">
 					<div class="main-form__column">

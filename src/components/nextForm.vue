@@ -3,11 +3,11 @@
 	<section class="form-popup">
 		<div class="main-nav">
 			<div class="main-nav__content">
-				<button class="circle-button up-button"  @click="change(0)"></button>
+				<button class="circle-button up-button" @click="change(0)"></button>
 				<ul class="dots">
 					<li class="dot"></li>
 					<li class="dot "></li>
-					<li class="dot"></li>
+					<li class="dot "></li>
 					<li class="dot active"></li>
 				</ul>
 				<button class="circle-button down-button"></button>
@@ -44,7 +44,7 @@
 									id="email"
 									:class="{ error: isEmailError, success: isEmailValid }"
 									@blur="isEmailTouched = true"
-									@focus="isEmailTouched = false, reset = false">
+									@focus="isEmailTouched = false,  reset = false">
 							<span class="field__label">Email ID</span>
 							<span class="field__border"></span>
 							<i class="zmdi zmdi-check success-icon"></i>
@@ -58,7 +58,7 @@
 									error: isCountryError}"
 									@click="openCountrySelect = true"
 									@blur="openCountrySelect = false, isCountryTouched = true"
-									@focus="isCountryTouched = false, reset = false">
+									@focus="isCountryTouched = false,  reset = false">
 								<option v-for="country in countries" v-bind:key="country.id" v-bind:value="country.id">
 									{{country.name}}
 								</option>
@@ -76,7 +76,7 @@
 									id="phoneNumber"
 									:class="{ error: isPhoneNumberError, success: isPhoneNumberValid }"
 									@blur="isPhoneNumberTouched = true"
-									@focus="isPhoneNumberTouched = false, reset = false">
+									@focus="isPhoneNumberTouched = false,  reset = false">
 							<span class="field__label">Phone Number</span>
 							<span class="field__border"></span>
 							<i class="zmdi zmdi-check success-icon"></i>
@@ -91,7 +91,7 @@
 									id="lastName"
 									:class="{ error: isLastNameError, success: isLastNameValid }"
 									@blur="isLastNameTouched = true"
-									@focus="isLastNameTouched = false, reset = false">
+									@focus="isLastNameTouched = false,  reset = false">
 							<span class="field__label">Last Name</span>
 							<span class="field__border"></span>
 							<i class="zmdi zmdi-check success-icon"></i>
@@ -104,7 +104,7 @@
 									id="userID"
 									:class="{ error: isUserIDError, success: isUserIDValid }"
 									@blur="isUserIDTouched = true"
-									@focus="isUserIDTouched = false"
+									@focus="isUserIDTouched = false,  reset = false"
 							>
 							<span class="field__label">Your User ID</span>
 							<span class="field__border"></span>
@@ -119,7 +119,8 @@
 										error: isStateError}"
 										@click="openStateSelect = true"
 										@blur="openStateSelect = false, isStateTouched = true"
-										@focus="isStateTouched = false, reset = false">
+										@focus="isStateTouched = false,  reset = false">
+									<option v-if="!countrySelected" disabled value="">Select country</option>
 									<option v-for="state in purposeStates" v-bind:key="state.id" v-bind:value="state.id">
 										{{state.name}}
 									</option>
@@ -137,7 +138,8 @@
 									error: isCityError}"
 										@click="openCitySelect = true"
 										@blur="openCitySelect = false, isCityTouched = true"
-										@focus="isCityTouched = false, reset = false">
+										@focus="isCityTouched = false">
+									<option v-if="!stateSelected" disabled value="">Select state</option>
 									<option v-for="city in purposeCities" v-bind:key="city.id" v-bind:value="city.name">
 										{{city.name}}
 									</option>
@@ -155,7 +157,7 @@
 									id="referenceCode"
 									:class="{ error: isReferenceCodeError, success: isReferenceCodeValid }"
 									@blur="isReferenceCodeTouched = true"
-									@focus="isReferenceCodeTouched = false, reset = false">
+									@focus="isReferenceCodeTouched = false,  reset = false">
 							<span class="field__label">Reference Code</span>
 							<span class="field__border"></span>
 							<i class="zmdi zmdi-check success-icon"></i>
@@ -175,10 +177,10 @@
 	/* eslint-disable no-console */
 
 	const emailCheckRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-	const nameCheckRegex =/^[а-яёіїє]{2,50}$/iu;
-	const phoneCheckRegex =/^\+380\d{9}$/;
+	const nameCheckRegex = /^[а-яёіїє]{2,50}$/iu;
+	const phoneCheckRegex = /^\+380\d{9}$/;
 	const userIDCheckRegex = /^[a-z_]{5,30}$/iu;
-	const referenceCodeCheckRegex =/^[a-z0-9]{10}$/iu;
+	const referenceCodeCheckRegex = /^[a-z0-9]{10}$/iu;
 
 	export default {
 		name: 'formNextDetails',
@@ -220,13 +222,14 @@
 				gridData: null,
 				nameForm: 'NextDetails',
 				continue: false,
+				validForm: false
 			}
 		},
 		computed: {
-			isFirstNameValid () {
+			isFirstNameValid() {
 				return this.firstName && nameCheckRegex.test(this.firstName);
 			},
-			isFirstNameError () {
+			isFirstNameError() {
 				return !this.isFirstNameValid && this.isFirstNameTouched && !this.reset;
 			},
 			isEmailValid() {
@@ -271,85 +274,25 @@
 		},
 		methods: {
 			checkForm() {
-				let valid = true;
-				if (!this.reset) {
-					if (!this.isFirstNameValid) {
-						this.isFirstNameTouched = true;
-						valid = false;
-					}
-					if (!this.isEmailValid) {
-						this.isEmailTouched = true;
-						valid = false;
-					}
-					if (!this.countrySelected) {
-						this.isCountryTouched = true;
-						valid = false;
-					}
-					if (!this.isPhoneNumberValid) {
-						this.isPhoneNumberTouched = true;
-						valid = false;
-					}
-					if (!this.isLastNameValid) {
-						this.isLastNameTouched = true;
-						valid = false;
-					}
-					if (!this.isUserIDValid) {
-						this.isUserIDTouched = true;
-						valid = false;
-					}
-					if (!this.isReferenceCodeValid) {
-						this.isReferenceCodeTouched = true;
-						valid = false;
-					}
-					if (!this.stateSelected) {
-						this.isStateTouched = true;
-						valid = false;
-					}
-					if (!this.citySelected) {
-						this.isCityTouched = true;
-						valid = false;
-					}
-					if (valid) {
-						this.gridData = {
-							FirstName: this.firstName,
-							Email: this.email,
-							CountryId: this.countrySelected,
-							PhoneNumber: this.phoneNumber,
-							LastName: this.lastName,
-							UserID: this.userID,
-							ReferenceCode: this.referenceCode,
-							StateID: this.stateSelected,
-							City: this.citySelected
-						};
-						localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
-					}
-					else {
-						if (this.continue) {
-							this.gridData = {
-								FirstName: this.firstName,
-								Email: this.email,
-								CountryId: this.countrySelected,
-								PhoneNumber: this.phoneNumber,
-								LastName: this.lastName,
-								UserID: this.userID,
-								ReferenceCode: this.referenceCode,
-								StateID: this.stateSelected,
-								City: this.citySelected
-							};
-							localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
-						}
+				if (this.reset && this.continue) {
+					this.setGridData();
+					this.checkValid();
+				} else {
+					this.checkValid();
+					if (this.validForm) {
+						this.setGridData();
 					}
 				}
 				this.reset = false;
-				return valid;
+				return this.validForm;
 			},
 			setContinue() {
 				this.continue = true;
 			},
 			resetForm() {
 				this.continue = false;
-				const sureAnswear = confirm('Are you sure?');
-				if (sureAnswear) {
+				const sureAnswer = confirm('Are you sure?');
+				if (sureAnswer) {
 					this.reset = true;
 					this.firstName = null;
 					this.isFirstNameTouched = false;
@@ -372,9 +315,61 @@
 				}
 			},
 			change(number) {
-				this.setContinue();
 				if (this.checkForm()) {
 					this.$emit('changePage', number);
+				}
+			},
+			setGridData() {
+				this.gridData = {
+					FirstName: this.firstName,
+					Email: this.email,
+					CountryId: this.countrySelected,
+					PhoneNumber: this.phoneNumber,
+					LastName: this.lastName,
+					UserID: this.userID,
+					ReferenceCode: this.referenceCode,
+					StateID: this.stateSelected,
+					City: this.citySelected
+				};
+				localStorage.setItem(this.nameForm, JSON.stringify(this.gridData))
+			},
+			checkValid() {
+				this.validForm = true;
+				if (!this.isFirstNameValid) {
+					this.isFirstNameTouched = true;
+					this.validForm = false;
+				}
+				if (!this.isEmailValid) {
+					this.isEmailTouched = true;
+					this.validForm = false;
+				}
+				if (!this.countrySelected) {
+					this.isCountryTouched = true;
+					this.validForm = false;
+				}
+				if (!this.isPhoneNumberValid) {
+					this.isPhoneNumberTouched = true;
+					this.validForm = false;
+				}
+				if (!this.isLastNameValid) {
+					this.isLastNameTouched = true;
+					this.validForm = false;
+				}
+				if (!this.isUserIDValid) {
+					this.isUserIDTouched = true;
+					this.validForm = false;
+				}
+				if (!this.isReferenceCodeValid) {
+					this.isReferenceCodeTouched = true;
+					this.validForm = false;
+				}
+				if (!this.stateSelected) {
+					this.isStateTouched = true;
+					this.validForm = false;
+				}
+				if (!this.citySelected) {
+					this.isCityTouched = true;
+					this.validForm = false;
 				}
 			},
 			updateValue() {
@@ -393,7 +388,7 @@
 			countrySelected: {
 				handler(value) {
 					this.purposeStates = this.states.filter((state) => state.country_id === value);
-					if(value)  {
+					if (value) {
 						this.stateSelected = null;
 						this.citySelected = null;
 					}
